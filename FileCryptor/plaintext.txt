@@ -1,0 +1,22 @@
+tuple:
+scriem x = (3,), nu x = (3), deoarece, daca scriem fara virgula, python CREDE ca noi vrem sa APELAM FUNCTIA DIN INTERIORUL PARANTEZELOR
+
+
+insert - append care introduce o valoare doar daca nu a mai fost introdusa
+
+
+observatii:
+- x = [1,2,3]; y = x; y[0] = 7; print(y): [7,2,3], referinte
+- def fct(9, x = [])
+    x.app(a)
+  fct(7) - x =[7]
+  fct(5) - x =[7,5]
+  fct(6,y) - x = [1,6]
+- operatii pe biti
+- x * (x ** -1)
+- imutabilitate stringuri
+- dau un sir, modific s[0] - surpriza, da exceptie pentru ca string-urile sunt imutabile; cum modific? 
+x = "test", vreau x = "fest
+daca x[0] = 'f', da exceptie
+Facem asa:
+x = 'f' + x[1:]tt
