@@ -4,12 +4,12 @@ import os
 import hashlib
 
 
-def hash(filePath):
+def hash(filePath,fileSize):
     try:
         m = hashlib.sha1()
         f = open(filePath,"rb")
         while True:
-            data = f.read(4096)
+            data = f.read(fileSize)
             if len(data)==0: 
                 break
             m.update(data)
@@ -38,9 +38,6 @@ def crypt(file,pw):
             
         try:
             crypted = open(newfile, 'w+', encoding="utf-8")
-            m = hash(file)
-            crypted.write(m)
-            crypted.write('\n')
             lastbits = ""
             while(1):
                 char = data.read(1)
@@ -51,6 +48,11 @@ def crypt(file,pw):
                 else:
                     lastbits += '2'
                 t += 1
+                
+            m = hash(file,t)
+            crypted.write(m)
+            crypted.write('\n')
+            
             crypted.write(lastbits)
             crypted.write('\n')
             
@@ -75,6 +77,8 @@ def crypt(file,pw):
                 d += 1
                 cryptedfile = os.path.splitext(file)[0] + '_' + str(d) + os.path.splitext(file)[1] + '.crypted'
             os.rename(newfile, cryptedfile)
+            print('Criptare realizata cu succes.')
+            print('Locatie fisier criptat:', cryptedfile)
         except:
             print('Au aparut probleme in timpul procesului de criptare. Introduceti date valide.')
     except Exception as e:
@@ -111,8 +115,6 @@ def decrypt(file,pw):
             for count, line in enumerate(data):
                 pass
             if(count+1 < 3):
-                print(count)
-                print('1')
                 raise Exception("Fisierul criptat contine date invalide. Introduceti date valide.")
             
             data.seek(0)
@@ -137,7 +139,7 @@ def decrypt(file,pw):
             os.remove(newfile)
             crypted.close()
             
-            newhash = hash(goodfile)
+            newhash = hash(goodfile,k)
             if(newhash == oghash):
                 print('Decriptare realizata cu succes.')
                 print('Locatie fisier decriptat:', goodfile)
